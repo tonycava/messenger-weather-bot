@@ -27,6 +27,10 @@ app.post('/webhook', (req, res) => {
   }
 });
 
+app.get('/home', (req, res) => {
+  res.send('hehehehe');
+});
+
 app.get('/webhook', (req, res) => {
   // Your verify token. Should be a random string.
   let VERIFY_TOKEN = 'oU6gY6iC3tO1kK2sF';

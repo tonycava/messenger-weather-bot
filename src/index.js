@@ -23,7 +23,7 @@ app.post('/webhook', (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.send('je susi');
+  res.send('jhhhhusi');
 });
 
 app.get('/webhook', (req, res) => {

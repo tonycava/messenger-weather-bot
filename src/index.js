@@ -1,14 +1,9 @@
-module.exports = async function App(context) {
-  await context.sendText('Welcome to Bottender');
-};
-
 const express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
 
 app.post('/webhook', (req, res) => {
   let body = req.body;
-
   // Checks this is an event from a page subscription
   if (body.object === 'page') {
     // Iterates over each entry - there may be multiple if batched

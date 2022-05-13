@@ -27,7 +27,7 @@ app.post('/webhook', (req, res) => {
   }
 });
 
-app.get('/home', (req, res) => {
+app.get('/', (req, res) => {
   res.send('hehehehe');
 });
 

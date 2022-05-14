@@ -5,21 +5,16 @@ const express = require('express'),
 const request = require('request');
 
 function callSendAPI(sender_psid, response) {
-  console.log('call');
   const request_body = {
+    get_started: {
+      payload: 'GET_STARTED_PAYLOAD',
+    },
     greeting: [
       {
         locale: 'default',
         text: 'Hello {{user_first_name}}!',
       },
-      {
-        locale: 'en_US',
-        text: 'Timeless apparel for the masses.',
-      },
     ],
-    get_started: {
-      payload: 'GET_STARTED_PAYLOAD',
-    },
     recipient: {
       id: sender_psid,
     },
@@ -28,7 +23,8 @@ function callSendAPI(sender_psid, response) {
 
   request(
     {
-      uri: 'https://graph.facebook.com/v6.0/me/messages',
+      // uri: 'https://graph.facebook.com/v6.0/me/messages',
+      uri: 'https://graph.facebook.com/v13.0/me/messenger_profile',
       qs: {
         access_token:
           'EAAvOOplsX2IBAJMdwZAInTQSs0Hrcs1rtFRRn5HMevGEywWNyaPc86YBKky8aCRXpq7cqdU8S1AfqfWcIIPoo9vKZBwOPoHHM0cZAg7qJwdVyGsKQlEVVRlqpj5qafNFkL9Rh8xmpBFDCW93znrU67aMWvBQlr8ZCflSRCZAYAKmHitXPOql2',
@@ -58,9 +54,7 @@ function handlePostback(sender_psid, received_postback) {
   console.log('postback');
   let response;
   let payload = received_postback.payload;
-  console.log(payload);
   if (payload === 'GET STARTED') {
-    console.log('payload');
     response = { text: 'Welcome !' };
   }
   callSendAPI(sender_psid, response);

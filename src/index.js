@@ -23,8 +23,7 @@ function callSendAPI(sender_psid, response) {
 
   request(
     {
-      // uri: 'https://graph.facebook.com/v6.0/me/messages',
-      uri: 'https://graph.facebook.com/v13.0/me/messenger_profile',
+      uri: 'https://graph.facebook.com/v6.0/me/messages',
       qs: {
         access_token:
           'EAAvOOplsX2IBAJMdwZAInTQSs0Hrcs1rtFRRn5HMevGEywWNyaPc86YBKky8aCRXpq7cqdU8S1AfqfWcIIPoo9vKZBwOPoHHM0cZAg7qJwdVyGsKQlEVVRlqpj5qafNFkL9Rh8xmpBFDCW93znrU67aMWvBQlr8ZCflSRCZAYAKmHitXPOql2',
@@ -50,14 +49,16 @@ function handleMessage(sender_psid, received_message) {
   callSendAPI(sender_psid, response);
 }
 
+// eslint-disable-next-line no-unused-vars
 function handlePostback(sender_psid, received_postback) {
-  console.log('postback');
-  let response;
-  let payload = received_postback.payload;
-  if (payload === 'GET STARTED') {
-    response = { text: 'Welcome !' };
-  }
-  callSendAPI(sender_psid, response);
+  console.log('here');
+  // console.log('postback');
+  // let response;
+  // let payload = received_postback.payload;
+  // if (payload === 'GET STARTED') {
+  //   response = { text: 'Welcome !' };
+  // }
+  // callSendAPI(sender_psid, response);
 }
 
 // Sends response messages via the Send API

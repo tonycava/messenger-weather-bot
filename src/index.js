@@ -51,14 +51,15 @@ function handleMessage(sender_psid, received_message) {
 
 // eslint-disable-next-line no-unused-vars
 function handlePostback(sender_psid, received_postback) {
-  console.log('here');
-  // console.log('postback');
-  // let response;
-  // let payload = received_postback.payload;
-  // if (payload === 'GET STARTED') {
-  //   response = { text: 'Welcome !' };
-  // }
-  // callSendAPI(sender_psid, response);
+  console.log('postback');
+  let response;
+  let payload = received_postback.payload;
+  console.log(payload);
+  if (payload === 'GET STARTED') {
+    console.log('in');
+    response = { text: 'Welcome !' };
+  }
+  callSendAPI(sender_psid, response);
 }
 
 // Sends response messages via the Send API

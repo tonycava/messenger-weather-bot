@@ -8,7 +8,7 @@ function callSendAPI(sender_psid, response) {
   // Construct the message body
   let request_body = {
     get_started: {
-      payload: 'je test',
+      payload: 'GET_STARTED_PAYLOAD',
     },
     recipient: {
       id: sender_psid,
@@ -34,7 +34,7 @@ function callSendAPI(sender_psid, response) {
       } else {
         console.error('Unable to send message:' + err);
       }
-    },
+    }
   );
 }
 
@@ -58,6 +58,15 @@ function handleMessage(sender_psid, received_message) {
 // Handles messaging_post backs events
 // eslint-disable-next-line no-unused-vars
 function handlePostback(sender_psid, received_postback) {
+  let response;
+  let payload = received_postback.payload;
+
+  // Set the response based on the postback payload
+  if (payload === 'GET_STARTED_PAYLOAD') {
+    response = { text: 'Welcome !' };
+  }
+  // Send the message to acknowledge the postback
+  callSendAPI(sender_psid, response);
 }
 
 // Sends response messages via the Send API
@@ -69,7 +78,7 @@ app.post('/webhook', (req, res) => {
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
     // Iterate over each entry - there may be multiple if batched
-    body.entry.forEach(function(entry) {
+    body.entry.forEach(function (entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
       console.log(webhook_event);

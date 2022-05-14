@@ -5,8 +5,8 @@ const express = require('express'),
 const request = require('request');
 
 function callSendAPI(sender_psid, response) {
-  // Construct the message body
-  let request_body = {
+  console.log('call');
+  const request_body = {
     get_started: {
       payload: 'GET_STARTED_PAYLOAD',
     },
@@ -16,7 +16,6 @@ function callSendAPI(sender_psid, response) {
     message: response,
   };
 
-  // Send the HTTP request to the Messenger Platform
   request(
     {
       uri: 'https://graph.facebook.com/v6.0/me/messages',
@@ -29,43 +28,30 @@ function callSendAPI(sender_psid, response) {
     },
     // eslint-disable-next-line no-unused-vars
     (err, res, body) => {
-      if (!err) {
-        console.log('message sent!');
-      } else {
-        console.error('Unable to send message:' + err);
-      }
+      if (!err) console.log('message sent!');
+      else console.error('Unable to send message:' + err);
     }
   );
 }
 
-// Handles messages events
-// eslint-disable-next-line no-unused-vars
 function handleMessage(sender_psid, received_message) {
   let response;
-
-  // Check if the message contains text
   if (received_message.text) {
-    // Create the payload for a basic text message
     response = {
       text: `You sent the message: "${received_message.text}". Now send me an image!`,
     };
   }
-
-  // Sends the response message
   callSendAPI(sender_psid, response);
 }
 
-// Handles messaging_post backs events
-// eslint-disable-next-line no-unused-vars
 function handlePostback(sender_psid, received_postback) {
+  console.log('postback');
   let response;
   let payload = received_postback.payload;
-
-  // Set the response based on the postback payload
   if (payload === 'GET_STARTED_PAYLOAD') {
+    console.log('payload');
     response = { text: 'Welcome !' };
   }
-  // Send the message to acknowledge the postback
   callSendAPI(sender_psid, response);
 }
 
@@ -81,7 +67,6 @@ app.post('/webhook', (req, res) => {
     body.entry.forEach(function (entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
-      console.log(webhook_event);
 
       // Get the sender PSID
       let sender_psid = webhook_event.sender.id;

@@ -55,7 +55,7 @@ function handlePostback(sender_psid, received_postback) {
   let response;
   let payload = received_postback.payload;
   console.log(payload);
-  if (payload === 'GET STARTED') {
+  if (payload === 'GET_STARTED_PAYLOAD') {
     console.log('in');
     response = { text: 'Welcome !' };
   }

@@ -48,6 +48,7 @@ function handlePostback(sender_psid, received_postback) {
   console.log('postback');
   let response;
   let payload = received_postback.payload;
+  console.log(payload, 'payload');
   if (payload === 'GET_STARTED_PAYLOAD') {
     console.log('payload');
     response = { text: 'Welcome !' };

@@ -7,6 +7,16 @@ const request = require('request');
 function callSendAPI(sender_psid, response) {
   console.log('call');
   const request_body = {
+    greeting: [
+      {
+        locale: 'default',
+        text: 'Hello {{user_first_name}}!',
+      },
+      {
+        locale: 'en_US',
+        text: 'Timeless apparel for the masses.',
+      },
+    ],
     get_started: {
       payload: 'GET_STARTED_PAYLOAD',
     },

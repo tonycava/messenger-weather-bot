@@ -23,7 +23,7 @@ function callSendAPI(sender_psid, response) {
 
   request(
     {
-      uri: 'https://graph.facebook.com/v6.0/me/messages',
+      uri: 'https://graph.facebook.com/v13.0/me/messages',
       qs: {
         access_token:
           'EAAvOOplsX2IBAJMdwZAInTQSs0Hrcs1rtFRRn5HMevGEywWNyaPc86YBKky8aCRXpq7cqdU8S1AfqfWcIIPoo9vKZBwOPoHHM0cZAg7qJwdVyGsKQlEVVRlqpj5qafNFkL9Rh8xmpBFDCW93znrU67aMWvBQlr8ZCflSRCZAYAKmHitXPOql2',

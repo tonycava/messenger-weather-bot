@@ -15,6 +15,14 @@ function callSendAPI(sender_psid, response) {
         text: 'Hello {{user_first_name}}!',
       },
     ],
+    buttons: [
+      {
+        type: 'web_url',
+        url: 'https://www.messenger.com/',
+        title: 'URL Button',
+        webview_height_ratio: 'full',
+      },
+    ],
     recipient: {
       id: sender_psid,
     },

@@ -67,7 +67,7 @@ function handleMessage(sender_psid, received_message) {
       .then((res) => res.data.main.temp);
     response = {
       text: `You sent the message: "${received_message.text}"., ${
-        data - 273.14
+        Number(data) - 273.14
       } Now send me an image!`,
     };
   }

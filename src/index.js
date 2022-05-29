@@ -37,7 +37,7 @@ function callSendAPI(sender_psid, response) {
     (err, res, body) => {
       if (!err) console.log('message sent!');
       else console.error('Unable to send message:' + err);
-    }
+    },
   );
 }
 
@@ -65,6 +65,7 @@ function handleMessage(sender_psid, received_message) {
         'https://api.openweathermap.org/data/2.5/weather?lat=43.604652&lon=1.444209&appid=e2c0fdbe68fa3660805dd3e03cc2d8e4',
       )
       .then((res) => res.data.main.temp);
+    console.log(data);
     response = {
       text: `You sent the message: "${received_message.text}"., ${
         Number(data) - 273.14
@@ -73,7 +74,9 @@ function handleMessage(sender_psid, received_message) {
   }
   callSendAPI(sender_psid, response);
 }
+
 handleMessage('ddd', 'ff');
+
 // eslint-disable-next-line no-unused-vars
 function handlePostback(sender_psid, received_postback) {
   console.log('postback');

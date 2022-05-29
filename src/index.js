@@ -18,6 +18,7 @@ function callSendAPI(sender_psid, response) {
     recipient: {
       id: sender_psid,
     },
+    messaging_type: 'RESPONSE',
     message: response,
   };
 
@@ -41,7 +42,24 @@ function callSendAPI(sender_psid, response) {
 
 function handleMessage(sender_psid, received_message) {
   let response;
-  if (received_message.text) {
+  if (received_message === 'quick') {
+    console.log('here');
+    response = {
+      text: 'Pick a color:',
+      quick_replies: [
+        {
+          content_type: 'text',
+          title: 'Red',
+          payload: 'RED',
+        },
+        {
+          content_type: 'text',
+          title: 'Green',
+          payload: 'GREEN',
+        },
+      ],
+    };
+  } else {
     response = {
       text: `You sent the message: "${received_message.text}". Now send me an image!`,
     };
@@ -58,6 +76,12 @@ function handlePostback(sender_psid, received_postback) {
   if (payload === 'GET_STARTED_PAYLOAD') {
     console.log('in');
     response = { text: 'Welcome !' };
+  } else if (payload === 'RED') {
+    console.log('in');
+    response = { text: 'red !' };
+  } else if (payload === 'GREEN') {
+    console.log('in');
+    response = { text: 'GRENN !' };
   }
   callSendAPI(sender_psid, response);
 }
@@ -82,28 +106,8 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
-        if (webhook_event.message.text === 'quick') {
-          console.log('here');
-          let response = {
-            messaging_type: 'RESPONSE',
-            text: 'Pick a color:',
-            quick_replies: [
-              {
-                content_type: 'text',
-                title: 'Red',
-                payload: '<POSTBACK_PAYLOAD>',
-                image_url: 'http://example.com/img/red.png',
-              },
-              {
-                content_type: 'text',
-                title: 'Green',
-                payload: '<POSTBACK_PAYLOAD>',
-                image_url: 'http://example.com/img/green.png',
-              },
-            ],
-          };
-          callSendAPI(sender_psid, response);
-        } else handleMessage(sender_psid, webhook_event.message);
+        console.log('here');
+        handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }

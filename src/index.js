@@ -41,7 +41,7 @@ function callSendAPI(sender_psid, response) {
   );
 }
 
-function handleMessage(sender_psid, received_message) {
+async function handleMessage(sender_psid, received_message) {
   let response;
   if (received_message.text === 'help') {
     response = {
@@ -60,7 +60,7 @@ function handleMessage(sender_psid, received_message) {
       ],
     };
   } else {
-    let data = axios
+    let data = await axios
       .get(
         'https://api.openweathermap.org/data/2.5/weather?lat=43.604652&lon=1.444209&appid=e2c0fdbe68fa3660805dd3e03cc2d8e4',
       )

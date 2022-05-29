@@ -15,14 +15,6 @@ function callSendAPI(sender_psid, response) {
         text: 'Hello {{user_first_name}}!',
       },
     ],
-    buttons: [
-      {
-        type: 'web_url',
-        url: 'https://www.messenger.com/',
-        title: 'URL Button',
-        webview_height_ratio: 'full',
-      },
-    ],
     recipient: {
       id: sender_psid,
     },
@@ -90,6 +82,27 @@ app.post('/webhook', (req, res) => {
       // Check if the event is a message or postback and
       // pass the event to the appropriate handler function
       if (webhook_event.message) {
+        if (webhook_event.message.text === 'quick') {
+          console.log('here');
+          let response = {
+            text: 'Pick a color:',
+            quick_replies: [
+              {
+                content_type: 'text',
+                title: 'Red',
+                payload: '<POSTBACK_PAYLOAD>',
+                image_url: 'http://example.com/img/red.png',
+              },
+              {
+                content_type: 'text',
+                title: 'Green',
+                payload: '<POSTBACK_PAYLOAD>',
+                image_url: 'http://example.com/img/green.png',
+              },
+            ],
+          };
+          callSendAPI(sender_psid, response);
+        }
         handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);

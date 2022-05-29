@@ -23,7 +23,7 @@ function callSendAPI(sender_psid, response) {
 
   request(
     {
-      uri: 'https://graph.facebook.com/v13.0/me/messages',
+      uri: 'https://graph.facebook.com/v14.0/me/messages',
       qs: {
         access_token:
           'EAAvOOplsX2IBAJMdwZAInTQSs0Hrcs1rtFRRn5HMevGEywWNyaPc86YBKky8aCRXpq7cqdU8S1AfqfWcIIPoo9vKZBwOPoHHM0cZAg7qJwdVyGsKQlEVVRlqpj5qafNFkL9Rh8xmpBFDCW93znrU67aMWvBQlr8ZCflSRCZAYAKmHitXPOql2',
@@ -85,6 +85,7 @@ app.post('/webhook', (req, res) => {
         if (webhook_event.message.text === 'quick') {
           console.log('here');
           let response = {
+            messaging_type: 'RESPONSE',
             text: 'Pick a color:',
             quick_replies: [
               {
@@ -102,8 +103,7 @@ app.post('/webhook', (req, res) => {
             ],
           };
           callSendAPI(sender_psid, response);
-        }
-        handleMessage(sender_psid, webhook_event.message);
+        } else handleMessage(sender_psid, webhook_event.message);
       } else if (webhook_event.postback) {
         handlePostback(sender_psid, webhook_event.postback);
       }

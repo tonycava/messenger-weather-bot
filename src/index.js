@@ -42,7 +42,7 @@ function callSendAPI(sender_psid, response) {
 
 function handleMessage(sender_psid, received_message) {
   let response;
-  if (received_message === 'quick') {
+  if (received_message.text === 'quick') {
     console.log('here');
     response = {
       text: 'Pick a color:',

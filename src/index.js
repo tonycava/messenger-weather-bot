@@ -2,6 +2,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   app = express().use(bodyParser.json()); // creates express http server
 
+const axios = require('axios');
 const request = require('request');
 
 function callSendAPI(sender_psid, response) {
@@ -42,8 +43,7 @@ function callSendAPI(sender_psid, response) {
 
 function handleMessage(sender_psid, received_message) {
   let response;
-  if (received_message.text === 'quick') {
-    console.log('here');
+  if (received_message.text === 'help') {
     response = {
       text: 'Pick a color:',
       quick_replies: [
@@ -60,28 +60,30 @@ function handleMessage(sender_psid, received_message) {
       ],
     };
   } else {
+    let data = axios
+      .get(
+        'https://api.openweathermap.org/data/2.5/weather?lat=43.604652&lon=1.444209&appid=e2c0fdbe68fa3660805dd3e03cc2d8e4',
+      )
+      .then((res) => res.data.main.temp);
     response = {
-      text: `You sent the message: "${received_message.text}". Now send me an image!`,
+      text: `You sent the message: "${received_message.text}"., ${
+        data - 273.14
+      } Now send me an image!`,
     };
   }
   callSendAPI(sender_psid, response);
 }
-
+handleMessage('ddd', 'ff');
 // eslint-disable-next-line no-unused-vars
 function handlePostback(sender_psid, received_postback) {
   console.log('postback');
   let response;
   let payload = received_postback.payload;
+
   console.log(payload);
   if (payload === 'GET_STARTED_PAYLOAD') {
     console.log('in');
     response = { text: 'Welcome !' };
-  } else if (payload === 'RED') {
-    console.log('in');
-    response = { text: 'red !' };
-  } else if (payload === 'GREEN') {
-    console.log('in');
-    response = { text: 'GRENN !' };
   }
   callSendAPI(sender_psid, response);
 }
@@ -95,7 +97,7 @@ app.post('/webhook', (req, res) => {
   // Check the webhook event is from a Page subscription
   if (body.object === 'page') {
     // Iterate over each entry - there may be multiple if batched
-    body.entry.forEach(function (entry) {
+    body.entry.forEach(function(entry) {
       // Gets the body of the webhook event
       let webhook_event = entry.messaging[0];
 

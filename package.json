@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "ts-node src/index.js"
+    "start": "nodemon src/index.js"
   },
   "dependencies": {
     "axios": "^0.27.2",

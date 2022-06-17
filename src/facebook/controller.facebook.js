@@ -1,7 +1,6 @@
 const { handlePostback, handleMessage } = require('./utils.facebook');
 
 const getWebHook = (res, req) => {
-  console.log('lalalalalala');
   let VERIFY_TOKEN = 'oU6gY6iC3tO1kK2sF';
 
   console.log(req.query);

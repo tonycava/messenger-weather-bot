@@ -1,18 +1,18 @@
-const request = require('request')
-const axios = require('axios')
+const request = require('request');
+const axios = require('axios');
 
 const handlePostback = (sender_psid, received_postback) => {
   console.log('postback');
   let response;
   let payload = received_postback.payload;
-  
+
   console.log(payload);
   if (payload === 'GET_STARTED_PAYLOAD') {
     console.log('in');
     response = { text: 'Welcome !' };
   }
   callSendAPI(sender_psid, response);
-}
+};
 
 const callSendAPI = (sender_psid, response) => {
   const request_body = {
@@ -31,7 +31,7 @@ const callSendAPI = (sender_psid, response) => {
     messaging_type: 'RESPONSE',
     message: response,
   };
-  
+
   request(
     {
       uri: 'https://graph.facebook.com/v14.0/me/messages',
@@ -46,9 +46,9 @@ const callSendAPI = (sender_psid, response) => {
     (err, res, body) => {
       if (!err) console.log('message sent!');
       else console.error('Unable to send message:' + err);
-    }
+    },
   );
-}
+};
 
 const handleMessage = async (sender_psid, received_message) => {
   let response;
@@ -69,9 +69,9 @@ const handleMessage = async (sender_psid, received_message) => {
       ],
     };
   } else {
-    let data = getData()
+    let data = await getData();
     console.log(data);
-    
+
     response = {
       text: `You sent the message: "${received_message.text}"., ${
         Number(data) - 273.14
@@ -79,18 +79,16 @@ const handleMessage = async (sender_psid, received_message) => {
     };
   }
   callSendAPI(sender_psid, response);
-}
+};
 
-const getData = async () => {
-  return await axios
-    .get(
-      'https://api.openweathermap.org/data/2.5/weather?lat=43.604652&lon=1.444209&appid=e2c0fdbe68fa3660805dd3e03cc2d8e4'
-    )
-    .then((res) => res.data.main.temp);
-}
+const getData = () => {
+  return axios
+    .get('https://api.openweathermap.org/data/2.5/weather?lat=43.604652&lon=1.444209&appid=e2c0fdbe68fa3660805dd3e03cc2d8e4')
+    .then(({ data }) => data.main.temp);
+};
 
 module.exports = {
   callSendAPI,
   handlePostback,
-  handleMessage
-}
+  handleMessage,
+};

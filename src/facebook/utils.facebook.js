@@ -1,5 +1,6 @@
 const request = require('request');
 const axios = require('axios');
+const QueryString = require('querystring');
 
 const handlePostback = (sender_psid, received_postback) => {
   let response;
@@ -85,7 +86,10 @@ const handleMessage = async (sender_psid, received_message) => {
     }
     query = query.trim()
     console.log(query, "query")
+
+    query = capitalizeFirstLetter(query)
     let data = await getData(query)
+
     response = {
       text: `The weather in ${query} is : ${Math.floor(Number(data))}`,
     };
@@ -114,3 +118,7 @@ module.exports = {
   handlePostback,
   handleMessage,
 };
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

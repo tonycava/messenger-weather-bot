@@ -2,14 +2,10 @@ const request = require('request');
 const axios = require('axios');
 
 const handlePostback = (sender_psid, received_postback) => {
-  console.log('postback');
   let response;
   let payload = received_postback.payload;
-
-  console.log(payload);
   if (payload === 'GET_STARTED_PAYLOAD') {
-    console.log('in');
-    response = { text: 'Welcome !' };
+    response = { text: 'Welcome ! \n\n Type "help" to get started' };
   }
   callSendAPI(sender_psid, response);
 };
@@ -42,7 +38,6 @@ const callSendAPI = (sender_psid, response) => {
       method: 'POST',
       json: request_body,
     },
-    // eslint-disable-next-line no-unused-vars
     (err, res, body) => {
       if (!err) console.log('message sent!');
       else console.error('Unable to send message:' + err);
@@ -54,28 +49,25 @@ const handleMessage = async (sender_psid, received_message) => {
   let response;
   if (received_message.text === 'help') {
     response = {
-      text: 'Pick a color:',
+      text: "I'm here to help you !",
       quick_replies: [
         {
           content_type: 'text',
-          title: 'Red',
+          title: 'What I can do ?',
           payload: 'RED',
         },
         {
           content_type: 'text',
-          title: 'Green',
+          title: 'Contact the admin for help',
           payload: 'GREEN',
         },
       ],
     };
   } else {
-    let data = await getData();
-    console.log(data);
+    const data = await getData();
 
     response = {
-      text: `You sent the message: "${received_message.text}"., ${
-        Number(data) - 273.14
-      } Now send me an image!`,
+      text: `The weather in toulouse is : ${Math.floor(Number(data) - 273.14)}`,
     };
   }
   callSendAPI(sender_psid, response);

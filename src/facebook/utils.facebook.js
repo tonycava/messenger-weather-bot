@@ -49,6 +49,8 @@ const handleMessage = async (sender_psid, received_message) => {
   let response;
   const content = received_message.text.toUpperCase().split(' ')
 
+  console.log(received_message.text)
+
   if (received_message.text.toUpperCase() === 'HELP') {
     response = {
       text: 'I\'m here to help you !',

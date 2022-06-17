@@ -5,7 +5,7 @@ const handlePostback = (sender_psid, received_postback) => {
   let response;
   let payload = received_postback.payload;
   if (payload === 'GET_STARTED_PAYLOAD') {
-    response = { text: 'Welcome ! \n\n Type "help" to get started' };
+    response = { text: 'Welcome ! \n\nType "help" to get started' };
   }
   callSendAPI(sender_psid, response);
 };
@@ -67,16 +67,16 @@ const handleMessage = async (sender_psid, received_message) => {
     const data = await getData();
 
     response = {
-      text: `The weather in toulouse is : ${Math.floor(Number(data) - 273.14)}`,
+      text: `The weather in toulouse is : ${Math.floor(Number(data))}`,
     };
   }
   callSendAPI(sender_psid, response);
 };
 
-const getData = () => {
+const getData = (city = "Toulouse") => {
   return axios
-    .get('https://api.openweathermap.org/data/2.5/weather?lat=43.604652&lon=1.444209&appid=e2c0fdbe68fa3660805dd3e03cc2d8e4')
-    .then(({ data }) => data.main.temp);
+    .get(`http://api.weatherstack.com/current?access_key=${process.env.API_KEY}&query=${city}`)
+    .then(({ data }) => data.current.temperature);
 };
 
 module.exports = {

@@ -4,7 +4,11 @@ const routeFacebook = require('./facebook/route.facebook');
 const app = express();
 app.use(express.json());
 
-routeFacebook.router.get('/webhook');
+app.use('/webhook', routeFacebook);
+
+app.get('/', (req, res) => {
+  res.send('la')
+})
 
 
-app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
+app.listen(3333, () => console.log('webhook is listening'));

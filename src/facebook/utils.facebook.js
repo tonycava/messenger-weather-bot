@@ -1,7 +1,7 @@
 import request from 'request';
 import axios from 'axios';
 
-export const handlePostback = (sender_psid: any, received_postback: any) => {
+export const handlePostback = (sender_psid, received_postback) => {
   console.log('postback');
   let response;
   let payload = received_postback.payload;
@@ -14,7 +14,7 @@ export const handlePostback = (sender_psid: any, received_postback: any) => {
   callSendAPI(sender_psid, response);
 }
 
-export const callSendAPI = (sender_psid: any, response: any) => {
+export const callSendAPI = (sender_psid, response) => {
   const request_body = {
     get_started: {
       payload: 'GET_STARTED_PAYLOAD',
@@ -50,7 +50,7 @@ export const callSendAPI = (sender_psid: any, response: any) => {
   );
 }
 
-export const handleMessage = async (sender_psid: any, received_message: any) => {
+export const handleMessage = async (sender_psid, received_message) => {
   let response;
   if (received_message.text === 'help') {
     response = {

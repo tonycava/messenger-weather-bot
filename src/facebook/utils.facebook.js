@@ -85,7 +85,7 @@ const handleMessage = async (sender_psid, received_message) => {
     }
     query = query.trim()
     console.log(query, "query")
-    let data = getData(query)
+    let data = await getData(query)
     response = {
       text: `The weather in ${query} is : ${Math.floor(Number(data))}`,
     };
@@ -103,6 +103,7 @@ const handleMessage = async (sender_psid, received_message) => {
 const getData = (city = 'Toulouse') => {
   console.log(city)
   console.log(`http://api.weatherstack.com/current?access_key=${process.env.API_KEY}&query=${city}`)
+
   return axios
     .get(`http://api.weatherstack.com/current?access_key=${process.env.API_KEY}&query=${city}`)
     .then(({ data }) => data.current.temperature);

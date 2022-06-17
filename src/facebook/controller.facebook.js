@@ -1,6 +1,6 @@
 const { handlePostback, handleMessage  } = require('./utils.facebook');
 
-export const getWebHook = (res, req) => {
+const getWebHook = (res, req) => {
   let VERIFY_TOKEN = 'oU6gY6iC3tO1kK2sF';
   let mode = req.query['hub.mode'];
   let token = req.query['hub.verify_token'];
@@ -18,7 +18,7 @@ export const getWebHook = (res, req) => {
   }
 };
 
-export const postWebHook = (res, req) => {
+const postWebHook = (res, req) => {
   let body = req.body;
 
   if (body.object === 'page') {
@@ -40,3 +40,8 @@ export const postWebHook = (res, req) => {
     res.sendStatus(404);
   }
 };
+
+module.exports = {
+  getWebHook,
+  postWebHook
+}

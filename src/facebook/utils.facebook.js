@@ -1,7 +1,7 @@
 const request = require('request')
 const axios = require('axios')
 
-export const handlePostback = (sender_psid, received_postback) => {
+const handlePostback = (sender_psid, received_postback) => {
   console.log('postback');
   let response;
   let payload = received_postback.payload;
@@ -14,7 +14,7 @@ export const handlePostback = (sender_psid, received_postback) => {
   callSendAPI(sender_psid, response);
 }
 
-export const callSendAPI = (sender_psid, response) => {
+const callSendAPI = (sender_psid, response) => {
   const request_body = {
     get_started: {
       payload: 'GET_STARTED_PAYLOAD',
@@ -50,7 +50,7 @@ export const callSendAPI = (sender_psid, response) => {
   );
 }
 
-export const handleMessage = async (sender_psid, received_message) => {
+const handleMessage = async (sender_psid, received_message) => {
   let response;
   if (received_message.text === 'help') {
     response = {
@@ -87,4 +87,10 @@ const getData = async () => {
       'https://api.openweathermap.org/data/2.5/weather?lat=43.604652&lon=1.444209&appid=e2c0fdbe68fa3660805dd3e03cc2d8e4'
     )
     .then((res) => res.data.main.temp);
+}
+
+module.exports = {
+  callSendAPI,
+  handlePostback,
+  handleMessage
 }

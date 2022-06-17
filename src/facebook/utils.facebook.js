@@ -37,8 +37,7 @@ const callSendAPI = (sender_psid, response) => {
       },
       method: 'POST',
       json: request_body,
-    },
-    (err, res, body) => {
+    }, (err, res, body) => {
       if (!err) console.log('message sent!');
       else console.error('Unable to send message:' + err);
     },
@@ -47,9 +46,11 @@ const callSendAPI = (sender_psid, response) => {
 
 const handleMessage = async (sender_psid, received_message) => {
   let response;
-  if (received_message.text === 'help') {
+  const content = received_message.text.toUpperCase().split(' ')
+
+  if (received_message.text.toUpperCase() === 'HELP') {
     response = {
-      text: "I'm here to help you !",
+      text: 'I\'m here to help you !',
       quick_replies: [
         {
           content_type: 'text',
@@ -63,19 +64,42 @@ const handleMessage = async (sender_psid, received_message) => {
         },
       ],
     };
-  } else {
-    const data = await getData();
+    callSendAPI(sender_psid, response);
+  } else if (content[0] === 'WEATHER' && content[1] === undefined || content[1] === '') {
 
+    console.log("without")
+
+
+    const data = await getData();
     response = {
       text: `The weather in toulouse is : ${Math.floor(Number(data))}`,
     };
+    callSendAPI(sender_psid, response);
+  } else if (content[0] === 'WEATHER' && content[1] !== '') {
+
+    console.log("with")
+
+    let query = '';
+    for (let i = 1; i < content.length; i++) {
+      query += content[1] + ' ';
+    }
+    query = query.trim()
+    let data = getData(query)
+    response = {
+      text: `The weather in ${query} is : ${Math.floor(Number(data))}`,
+    };
+    callSendAPI(sender_psid, response);
+  } else {
+    console.log("no")
+    response = {
+      text: `No city found`,
+    };
+
+    callSendAPI(sender_psid, response);
   }
-  callSendAPI(sender_psid, response);
 };
 
-const getData = (city = "Toulouse") => {
-  console.log(`http://api.weatherstack.com/current?access_key=${process.env.API_KEY}&query=${city}`)
-
+const getData = (city = 'Toulouse') => {
   return axios
     .get(`http://api.weatherstack.com/current?access_key=${process.env.API_KEY}&query=${city}`)
     .then(({ data }) => data.current.temperature);

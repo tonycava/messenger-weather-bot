@@ -1,5 +1,5 @@
-import request from 'request';
-import axios from 'axios';
+const request = require('request')
+const axios = require('axios')
 
 export const handlePostback = (sender_psid, received_postback) => {
   console.log('postback');

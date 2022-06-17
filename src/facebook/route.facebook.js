@@ -1,5 +1,5 @@
-import express from 'express';
-import { getWebHook, postWebHook } from './controller.facebook';
+const express = require('express');
+const { getWebHook, postWebHook } = require('./controller.facebook');
 
 const router = express.Router();
 

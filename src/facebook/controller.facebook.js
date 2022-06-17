@@ -1,6 +1,4 @@
-import express from 'express';
-import { handlePostback, handleMessage  } from './utils.facebook';
-
+const { handlePostback, handleMessage  } = require('./utils.facebook');
 
 export const getWebHook = (res, req) => {
   let VERIFY_TOKEN = 'oU6gY6iC3tO1kK2sF';

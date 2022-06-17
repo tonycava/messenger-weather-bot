@@ -102,6 +102,7 @@ const handleMessage = async (sender_psid, received_message) => {
 
 const getData = (city = 'Toulouse') => {
   console.log(city)
+  console.log(`http://api.weatherstack.com/current?access_key=${process.env.API_KEY}&query=${city}`)
   return axios
     .get(`http://api.weatherstack.com/current?access_key=${process.env.API_KEY}&query=${city}`)
     .then(({ data }) => data.current.temperature);
